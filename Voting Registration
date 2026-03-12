@@ -1,0 +1,214 @@
+# A list to store dictionary objects for each voter
+voters = []
+
+# Valid candidates tuple (or list)
+CANDIDATES = ["Josh","AJ","Bernie"]
+def get_valid_age():
+    while True:
+        age_input = input("Enter Voter Age (18-120): ").strip()
+        
+        # Check if empty
+        if not age_input:
+            print("Error: Age cannot be empty.")
+            continue
+            
+        # Check if integer
+        if not age_input.isdigit():
+            print("Error: Age must be a number.")
+            continue
+            
+        age = int(age_input)
+        
+        # Check range
+        if 18 <= age <= 120:
+            return age
+        else:
+            print("Error: Age must be between 18 and 120.")
+def get_valid_candidate():
+    # Show options to user
+    print(f"Candidates: {', '.join(CANDIDATES)}")
+    
+    while True:
+        choice = input("Enter Candidate Name: ").strip().capitalize()
+        
+        if not choice:
+            print("Error: Choice cannot be empty.")
+            continue
+            
+        if choice in CANDIDATES:
+            return choice
+        else:
+            print("Error: Invalid candidate. Please choose Josh, AJ, or Bernie.")
+def get_valid_id():
+    while True:
+        v_id = input("Enter Voter ID (Alphanumeric): ").strip()
+        
+        if not v_id:
+            print("Error: ID cannot be empty.")
+            continue
+            
+        if v_id.isalnum():
+            # Optional: Check for uniqueness
+            id_exists = any(voter['id'] == v_id for voter in voters)
+            if id_exists:
+                print("Error: This ID has already voted.")
+            else:
+                return v_id
+        else:
+            print("Error: ID must contain only letters and numbers.")
+def register_voter():
+    print("\n--- Register New Voter ---")
+    # Call our helper functions from Step 2
+    age = get_valid_age()
+    choice = get_valid_candidate()
+    v_id = get_valid_id()
+    
+    # Store in a dictionary
+    new_voter = {
+        "id": v_id,
+        "age": age,
+        "choice": choice
+    }
+    
+    # Add to main list
+    voters.append(new_voter)
+    print("Voter registered successfully!")
+
+def display_all_voters():
+    print("\n--- Registered Voters ---")
+    if not voters:
+        print("No voters found.")
+    else:
+        # Loop through the list of dictionaries
+        for v in voters:
+            print(f"ID: {v['id']} | Age: {v['age']} | Choice: {v['choice']}")
+
+def search_voter():
+    print("\n--- Search by ID ---")
+    search_id = input("Enter ID to search: ").strip()
+    found = False
+    
+    for v in voters:
+        if v['id'] == search_id:
+            print(f"Found: ID: {v['id']}, Age: {v['age']}, Vote: {v['choice']}")
+            found = True
+            break
+            
+    if not found:
+        print("Voter ID not found.")
+# --- Configuration ---
+CANDIDATES = ["Alice", "Bob", "Charlie"]
+voters = []  # List to store voter dictionaries
+
+# --- Validation Functions ---
+def get_valid_age():
+    while True:
+        age_input = input("Enter Voter Age (18-120): ").strip()
+        if not age_input:
+            print("Error: Input cannot be empty.")
+        elif not age_input.isdigit():
+            print("Error: Age must be a valid integer.")
+        else:
+            age = int(age_input)
+            if 18 <= age <= 120:
+                return age
+            else:
+                print("Error: Age must be between 18 and 120.")
+
+def get_valid_candidate():
+    print(f"Available Candidates: {', '.join(CANDIDATES)}")
+    while True:
+        # .title() ensures 'alice' becomes 'Alice' to match the list
+        choice = input("Enter Candidate Name: ").strip().title()
+        if not choice:
+            print("Error: Input cannot be empty.")
+        elif choice in CANDIDATES:
+            return choice
+        else:
+            print("Error: Invalid candidate. Please check spelling.")
+
+def get_valid_id():
+    while True:
+        v_id = input("Enter Voter ID (Alphanumeric): ").strip()
+        if not v_id:
+            print("Error: Input cannot be empty.")
+        elif not v_id.isalnum():
+            print("Error: ID must be alphanumeric (letters/numbers only).")
+        else:
+            # Check for Duplicate ID
+            is_duplicate = False
+            for voter in voters:
+                if voter['id'] == v_id:
+                    is_duplicate = True
+                    break
+            
+            if is_duplicate:
+                print("Error: This Voter ID has already been registered.")
+            else:
+                return v_id
+
+# --- Menu Functions ---
+def register_voter():
+    print("\n--- New Voter Registration ---")
+    # Get validated inputs
+    age = get_valid_age()
+    choice = get_valid_candidate()
+    v_id = get_valid_id()
+    
+    # Create dictionary and store it
+    voter_data = {
+        "id": v_id,
+        "age": age,
+        "choice": choice
+    }
+    voters.append(voter_data)
+    print(f"Success: Voter {v_id} registered.")
+
+def display_voters():
+    print("\n--- All Registered Voters ---")
+    if not voters:
+        print("No records found.")
+    else:
+        print(f"{'ID':<15} {'Age':<10} {'Choice':<15}")
+        print("-" * 40)
+        for v in voters:
+            print(f"{v['id']:<15} {v['age']:<10} {v['choice']:<15}")
+
+def search_voter():
+    print("\n--- Search Voter ---")
+    search_id = input("Enter Voter ID to search: ").strip()
+    found = False
+    for v in voters:
+        if v['id'] == search_id:
+            print(f"Match Found -> ID: {v['id']}, Age: {v['age']}, Vote: {v['choice']}")
+            found = True
+            break
+    if not found:
+        print("No voter found with that ID.")
+
+# --- Main Program Loop ---
+def main():
+    while True:
+        print("\n=== VOTING SYSTEM MENU ===")
+        print("1. Register New Voter")
+        print("2. Display All Registered Voters")
+        print("3. Search for a Voter by ID")
+        print("4. Exit")
+        
+        selection = input("Select an option (1-4): ").strip()
+        
+        if selection == '1':
+            register_voter()
+        elif selection == '2':
+            display_voters()
+        elif selection == '3':
+            search_voter()
+        elif selection == '4':
+            print("Exiting program. Goodbye!")
+            break
+        else:
+            print("Invalid selection. Please choose 1-4.")
+
+# Run the program
+if __name__ == "__main__":
+    main()
