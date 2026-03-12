@@ -1,0 +1,16 @@
+print("welcome_user")
+student_name = input("Please enter your student name:")
+assignment1 = input("Enter name of assignment 1:")
+homework2 = input("Enter name of homework 2:")
+quiz3 = input("Enter name of quiz 3:")
+score1 = float(input("Enter score for assignment 1: "))
+score2 = float(input("Enter score for homework 2: "))
+score3 = float(input("Enter score for quiz 3: "))
+total_score = score1 + score2 + score3
+average_score = total_score / 3
+print("Student Name:", student_name)
+print("Total Score:", total_score)
+print("Average Score:", average_score)
+print(assignment1, score1)
+print(homework2,score2)
+print(quiz3, score3)
